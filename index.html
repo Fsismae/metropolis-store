@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[ MS ] METROPOLIS STORE</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f7f7f7; }
+    h1 { text-align: center; }
+    .produto { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .produto img { max-width: 100%; height: auto; }
+    .btn-comprar { background: #00c851; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
+    .btn-comprar:hover { background: #007e33; }
+  </style>
+</head>
+<body>
+  <h1>[ MS ] METROPOLIS STORE</h1>
+  <div id="catalogo"></div>
+
+  <script>
+    const produtos = [
+      {
+        id: 1,
+        nome: "NETFLIX",
+        preco: "R$ 2,50",
+        imagem: "https://logodownload.org/wp-content/uploads/2014/10/netflix-logo-5.png",
+        estoque: 0
+      },
+      {
+        id: 2,
+        nome: "MAX",
+        preco: "R$ 3,50",
+        imagem: "https://logodownload.org/wp-content/uploads/2021/08/hbo-max-logo-0.png",
+        estoque: 0
+      },
+      {
+        id: 3,
+        nome: "PRIME VIDEO",
+        preco: "R$ 2,50",
+        imagem: "https://logodownload.org/wp-content/uploads/2017/11/prime-video-logo.png",
+        estoque: 0
+      }
+    ];
+
+    const catalogo = document.getElementById("catalogo");
+
+    produtos.forEach(produto => {
+      const div = document.createElement("div");
+      div.className = "produto";
+      div.innerHTML = `
+        <img src="${produto.imagem}" alt="${produto.nome}" />
+        <h2>${produto.nome}</h2>
+        <p>Preço: ${produto.preco}</p>
+        <p>Estoque: ${produto.estoque}</p>
+        <button class="btn-comprar" onclick="comprarProduto(${produto.id})">Comprar</button>
+      `;
+      catalogo.appendChild(div);
+    });
+
+    function comprarProduto(id) {
+      const produto = produtos.find(p => p.id === id);
+      if (produto.estoque <= 0) {
+        alert("Produto esgotado!");
+        return;
+      }
+
+      const email = prompt("Digite seu e-mail para receber o produto:");
+      if (email) {
+        produto.estoque--;
+        alert(`Pedido registrado para ${email}. Pague via Pix para finalizar a compra.\n\nProduto: ${produto.nome}\nValor: ${produto.preco}`);
+        console.log(`Pedido registrado: ${email} comprou ${produto.nome}`);
+      }
+    }
+  </script>
+</body>
+</html>
